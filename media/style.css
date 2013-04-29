@@ -33,6 +33,28 @@ body {
 #main {
 	padding: 0 0 0 7px;
 }
+#mark {
+	margin: 10px 0 0 275px;
+}
+#list {
+	list-style: none;
+	width: 400px;
+}
+#list li {
+	position: relative;
+}
+.items {
+	padding: 7px 25px 10px 7px;
+	border: 1px solid #ccc;
+	border-bottom: none;
+}
+.items:last-child {
+	border-bottom: 1px solid #ccc;
+}
+.remove {
+	position: absolute;
+	right: 10px;
+}
 #hint {
 	float: right;
 	margin: 5px 20px 0 0;
