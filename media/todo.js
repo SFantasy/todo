@@ -18,7 +18,6 @@ var Todo = {
 	// initialization function
 	init: function() {
 		this.newTodo();
-		(this.removeTodo)();
 	},
 	// create new item
 	newItem: function() {
@@ -51,15 +50,22 @@ var Todo = {
 	updateCount: function() {
 		$('count').firstChild.innerHTML = 
 			$('list').getElementsByTagName('li').length.toString();
+		Todo.removeTodo();
 	},
 	// remove todo
 	removeTodo: function() {
 		var btn = document.getElementsByClassName('remove');
-		var c = $('list').childNodes;
+		var c = $('list').childNodes;		
+		if(btn.length !== 1) {
+			btn.conclick = function() {
+				$('list').removeChild(c);
+			}
+		}
 		for(var i = 0; i < btn.length; i++) {
 			(function(cur) {
 				btn[cur].onclick = function() {
 					$('list').removeChild(c[cur]);
+					Todo.updateCount();
 				}
 			}) (i);
 		}
