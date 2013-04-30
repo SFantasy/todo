@@ -51,6 +51,7 @@ var Todo = {
 				return;
 			}
 			//taskNumber++;
+			Todo.editItems();
 			Todo.updateCount();
 		};
 	},
@@ -81,6 +82,7 @@ var Todo = {
 			(function(cur) {
 				btn[cur].onclick = function() {
 					$('list').removeChild(c[cur]);
+					Todo.editItems();
 					Todo.updateCount();
 				}
 			}) (i);
@@ -102,7 +104,17 @@ var Todo = {
 	},
 	// edit the itmes
 	editItems: function() {
-		
+		var c = $('list').childNodes;
+		for(var i = 0; i < c.length; i++) {
+			(function(cur) {
+				c[cur].ondblclick = function() {
+					c[cur].firstChild.setAttribute('contenteditable', 'true');
+				}
+				c[cur].onmouseout = function() {
+					c[cur].firstChild.setAttribute('contenteditable', 'false');
+				}
+			}) (i);
+		}
 	}
 }
 
