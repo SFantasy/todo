@@ -48,12 +48,28 @@ body {
 	border: 1px solid #ccc;
 	border-bottom: none;
 }
+.items:first-child {
+	border-radius: 4px 4px 0 0;
+}
 .items:last-child {
 	border-bottom: 1px solid #ccc;
+	border-radius: 0 0 4px 4px;
+}
+.items>span {
+	display: inline-block;
+	max-width: 240px;
+	word-wrap: break-word;
 }
 .remove {
 	position: absolute;
 	right: 10px;
+}
+.complete {
+	position: absolute;
+	right: 75px;
+}
+.completed {
+	color: #ccc;
 }
 #hint {
 	float: right;

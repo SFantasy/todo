@@ -1,5 +1,7 @@
 var $ = function(id) { return document.getElementById(id) };
 var newElement = function(type) { return document.createElement(type) };
+
+//var taskNumber = 0;
 // my implements of getElementsByClassName('tagName', 'className')
 /*
 var getElementsByClassName = function(tagName, className) {
@@ -24,11 +26,15 @@ var Todo = {
 		var l = newElement('li');
 		var s = newElement('span');
 		l.className = 'items';
-		var btn = newElement('button');
-		btn.innerHTML = 'Remove';
-		btn.className = 'remove';
+		var btn1 = newElement('button');
+		btn1.innerHTML = 'Remove';
+		btn1.className = 'remove';
+		var btn2 = newElement('button');
+		btn2.innerHTML = 'Complete';
+		btn2.className = 'complete';
 		l.appendChild(s);
-		l.appendChild(btn);
+		l.appendChild(btn1);
+		l.appendChild(btn2);
 		return l;
 	},
 	// add new todo to the list
@@ -40,22 +46,32 @@ var Todo = {
 				newItem.firstChild.innerHTML = this.value;
 				$('list').appendChild(newItem);
 				this.value = '';
-				Todo.updateCount();
+				//Todo.updateCount();
 			} else {
 				return;
 			}
+			//taskNumber++;
+			Todo.updateCount();
 		};
 	},
 	// update count number of todos
 	updateCount: function() {
-		$('count').firstChild.innerHTML = 
-			$('list').getElementsByTagName('li').length.toString();
+		var n = 0;
+		var l = $('list').childNodes;
+		for(var i = 0; i < l.length; i++) {
+			if(l[i].firstChild.className !== 'completed') {
+				n++;
+			}
+		}
+		$('count').firstChild.innerHTML = n;
+		Todo.markComplete();
 		Todo.removeTodo();
 	},
 	// remove todo
 	removeTodo: function() {
 		var btn = document.getElementsByClassName('remove');
-		var c = $('list').childNodes;		
+		var c = $('list').childNodes;
+		
 		if(btn.length !== 1) {
 			btn.conclick = function() {
 				$('list').removeChild(c);
@@ -69,6 +85,24 @@ var Todo = {
 				}
 			}) (i);
 		}
+	},
+	// mark as completed
+	markComplete: function() {
+		var btn = document.getElementsByClassName('complete');
+		var c = $('list').childNodes;
+		for(var i = 0; i < btn.length; i++) {
+			(function(cur) {
+				btn[cur].onclick = function() {
+					c[cur].firstChild.className = 'completed';
+					Todo.removeTodo();
+					Todo.updateCount();
+				}
+			}) (i);
+		}
+	},
+	// edit the itmes
+	editItems: function() {
+		
 	}
 }
 
