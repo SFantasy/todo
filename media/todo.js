@@ -1,69 +1,54 @@
-var $ = function(id) { return document.getElementById(id) };
-var newElement = function(type) { return document.createElement(type) };
-// my implements of getElementsByClassName('tagName', 'className')
-/*
-var getElementsByClassName = function(tagName, className) {
-	var elements = document.getElementsByTagName('tagName');
-	var result = new Array();
-	for(var i = 0; i < elements.length; i++) {
-		if(i.className === 'className') {
-			result.push(elements[i]);
-		}
-	}
-	return result;
-};
-*/
+jQuery(function($) {
+	var App = {
+		init: function() {
+			this.bindEvents();
+			this.updateCount();
+		},
+		bindEvents: function() {
+			var list = $('#list');
+			$('#new').on('keyup', this.newTodo);
+			//list.on('click', '.remove', this.removeTodo);
+		},
+		newItem: function() {
+			var l = document.createElement('li');
+			var s = document.createElement('span');
+			l.className = 'items';
+			var btn = document.createElement('button');
+			btn.innerHTML = 'Remove';
+			btn.className = 'remove';
+			l.appendChild(s);
+			l.appendChild(btn);
+			return l;
+		},
+		newTodo: function(e) {
+			var $input = $(this);
+			var val = $.trim($input.val());
 
-var Todo = {
-	// initialization function
-	init: function() {
-		this.newTodo();
-		(this.removeTodo)();
-	},
-	// create new item
-	newItem: function() {
-		var l = newElement('li');
-		var s = newElement('span');
-		l.className = 'items';
-		var btn = newElement('button');
-		btn.innerHTML = 'Remove';
-		btn.className = 'remove';
-		l.appendChild(s);
-		l.appendChild(btn);
-		return l;
-	},
-	// add new todo to the list
-	newTodo: function() {
-		$('new').onkeydown = function(e) {
-			e = e || this.event;
-			if(e.keyCode === 13 && this.value) {
-				var newItem = Todo.newItem();
-				newItem.firstChild.innerHTML = this.value;
-				$('list').appendChild(newItem);
-				this.value = '';
-				Todo.updateCount();
-			} else {
+			if(e.which !== 13 || !val) {
 				return;
 			}
-		};
-	},
-	// update count number of todos
-	updateCount: function() {
-		$('count').firstChild.innerHTML = 
-			$('list').getElementsByTagName('li').length.toString();
-	},
-	// remove todo
-	removeTodo: function() {
-		var btn = document.getElementsByClassName('remove');
-		var c = $('list').childNodes;
-		for(var i = 0; i < btn.length; i++) {
-			(function(cur) {
-				btn[cur].onclick = function() {
-					$('list').removeChild(c[cur]);
-				}
-			}) (i);
+			var newItem = App.newItem();
+			newItem.firstChild.innerHTML = val;
+			$('#list').append(newItem);
+			$input.val('');
+			App.updateCount();
+		},
+		removeTodo: function() {
+			for(var i = 0; i < $('.remove').length; i++) {
+				(function(temp) {
+					$('.remove')[temp].onclick =  function() {
+						$('#list>.items:eq(temp)').remove();
+					};
+				}) (i);
+			}
+		},
+		updateCount: function() {
+			$('#count>strong').text($('#list>li').length);
+			this.removeTodo();
+		},
+		editTodo: function() {
 		}
 	}
-}
-
-window.onload = Todo.init();
+	
+	App.init();
+})
