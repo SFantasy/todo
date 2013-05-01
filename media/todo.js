@@ -122,7 +122,8 @@ var Todo = {
 		$('clear').onclick = function() {
 			for(var i = 0; i < c.length; i++) {
 				if(c[i].firstChild.className === 'completed') {
-					$('list').removeChild(c[i]);
+					$('list').removeChild(c[i])
+					c = $('list').childNodes;
 				}
 			}
 			Todo.editItems();
