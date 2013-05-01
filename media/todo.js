@@ -52,6 +52,8 @@ var Todo = {
 			}
 			//taskNumber++;
 			Todo.editItems();
+			Todo.markComplete();
+			Todo.removeTodo();
 			Todo.updateCount();
 		};
 	},
@@ -65,8 +67,6 @@ var Todo = {
 			}
 		}
 		$('count').firstChild.innerHTML = n;
-		Todo.markComplete();
-		Todo.removeTodo();
 	},
 	// remove todo
 	removeTodo: function() {
@@ -96,8 +96,8 @@ var Todo = {
 			(function(cur) {
 				btn[cur].onclick = function() {
 					c[cur].firstChild.className = 'completed';
-					Todo.removeTodo();
 					Todo.updateCount();
+					Todo.clearCompleted();
 				}
 			}) (i);
 		}
@@ -114,6 +114,21 @@ var Todo = {
 					c[cur].firstChild.setAttribute('contenteditable', 'false');
 				}
 			}) (i);
+		}
+	},
+	// clear completed tasks
+	clearCompleted: function() {
+		var c = $('list').childNodes;
+		$('clear').onclick = function() {
+			for(var i = 0; i < c.length; i++) {
+				if(c[i].firstChild.className === 'completed') {
+					$('list').removeChild(c[i]);
+				}
+			}
+			Todo.editItems();
+			Todo.markComplete();
+			Todo.removeTodo();
+			Todo.updateCount();
 		}
 	}
 }
