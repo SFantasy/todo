@@ -48,31 +48,82 @@ body {
 	border: 1px solid #ccc;
 	border-bottom: none;
 }
+.items:first-child {
+	border-radius: 4px 4px 0 0;
+}
 .items:last-child {
 	border-bottom: 1px solid #ccc;
+	border-radius: 0 0 4px 4px;
+}
+.items>span {
+	display: inline-block;
+	width: 240px;
+	padding: 5px 0 5px 5px;
+	word-wrap: break-word;
 }
 .remove {
 	position: absolute;
-	right: 10px;
+	right: 10px;	
+	background-color: #da4f49;
+	background-image: linear-gradient(to bottom, #ee5f5b, #bd362f);
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	color: #fff;
+}
+.remove:hover, .remove:focus {
+	background-color: #bd362f;
+}
+.complete {
+	position: absolute;
+	right: 75px;
+    background-color: #f5f5f5;
+    background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+}
+.complete:hover, .complete:focus {
+	background-color: #e6e6e6;
+}
+.completed {
+	color: #ccc;
 }
 #hint {
 	float: right;
 	margin: 5px 20px 0 0;
 }
+#clear, .remove, .complete {  
+	border-radius: 4px 4px 4px 4px;
+	background-repeat: repeat-x;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) #b3b3b3;
+	border-style: solid;
+	border-width: 1px;
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+	padding: 5px;
+}
+#clear:hover, .remove:hover, .complete:hover {
+	background-position: 0 -15px;
+	transition: background-position 0.1 linear 0s;
+}
 #clear {
 	color: #fff;
-	font-style: bold;
-	background-color: #006dcc;
-	background-image: linear-gradient(to bottom, #0088cc, #0044cc);
-	background-repeat: repeat-x;
-	border: 1px solid #006dcc;
-	border-radius: 2px;
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-	padding: 5px 5px;
+    background-color: #006dcc;
+    background-image: linear-gradient(to bottom, #0088cc, #0044cc);
 }
 #clear:hover, #clear:focus {
 	background-color: #0044cc;
 }
 #footer {
 	text-align: center;
+}
+#footer a {
+	text-decoration: none;
+	color: #006dcc;
+}
+#footer p:first-child {
+	color: #0088cc;
+	font-size: 16px;
+}
+#footer p:last-child {
+	color: #777;
+	font-size: 14px;
+}
+#footer a:hover {
+	color: #0088ff;
 }
