@@ -1,8 +1,4 @@
-var Todo = function() {
-	this.todoList = {}
-}
-
-$.extend(Todo.prototype, {
+var Todo = {
 	init: function() {
 		Todo.bindEvent()
 	},
@@ -10,15 +6,25 @@ $.extend(Todo.prototype, {
 		$('#add').on('click', function() {
 			Todo.newTodo()
 		})
-		$.each($('#list'), function(i, item) {
-
-		})
 	},
 	newTodo: function() {
 		var content = $('#content').val()
-		$('#list').prepend('<li>' + content + 
-			'<button class="complete">complete</button><button class="remove">remove</button></li>' )
-	}
-})
+		$('#list').prepend('<li><span>' + content
+			+ '</span>'
+			+ '<button class="complete">complete</button>'
+			+ '<button class="remove">remove</button></li>')
 
-Todo.init();
+		$.each($('#list > li'), function(i, item) {
+			$('.remove', item).on('click', function() {
+				console.log(item)
+			})
+		})
+
+		$('#content').val('')
+	},
+	removeTodo: function() {
+
+	}
+}
+
+Todo.init()
