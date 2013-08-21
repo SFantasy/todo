@@ -1,0 +1,10 @@
+header,
+article,
+footer {
+    width: 640px;
+    margin: 0 auto;
+    text-align: center;
+}
+ul > li {
+    list-style-position: inside;
+}
