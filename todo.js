@@ -1,30 +1,36 @@
 var Todo = {
 	init: function() {
-		Todo.bindEvent()
+		Todo.bindEvent();
 	},
 	bindEvent: function() {
 		$('#add').on('click', function() {
-			Todo.newTodo()
-		})
+			Todo.newTodo();
+			$.each($('#list li'), function(i, item) {
+				$('.complete', item).on('click', function() {
+					Todo.completeTodo(item);
+				});
+				$('.remove', item).on('click', function() {
+					Todo.removeTodo(item);
+				});
+			});
+		});
 	},
 	newTodo: function() {
-		var content = $('#content').val()
-		$('#list').prepend('<li><span>' + content
-			+ '</span>'
-			+ '<button class="complete">complete</button>'
-			+ '<button class="remove">remove</button></li>')
+		var content = $('#content').val();
+		$('#list').prepend('<li><span>' + content + '</span>' +
+			'<button class="complete">complete</button>' +
+			'<button class="remove">remove</button></li>');
 
-		$.each($('#list > li'), function(i, item) {
-			$('.remove', item).on('click', function() {
-				console.log(item)
-			})
-		})
-
-		$('#content').val('')
+		$('#content').val('');
 	},
-	removeTodo: function() {
-
+	completeTodo: function(el) {
+		$(el).find('span').wrap('<strike>');
+	},
+	removeTodo: function(el) {
+		$(el).remove();
 	}
-}
+};
 
-Todo.init()
+Zepto(function($) {
+	Todo.init();
+});
