@@ -10,19 +10,43 @@ var Todo = {
 		} else {
 			var d = localStorage.getItem('todo');
 			Todo.appdata = JSON.parse(d);
+			$.each(Todo.appdata.todos, function(i, item) {
+				if(item.complete === true) {
+					$('#list').prepend('<li><strike><span>' + item.content + '</span></strike>' +
+						'<button class="complete">complete</button>' +
+						'<button class="remove">remove</button></li>');
+				} else {
+					$('#list').prepend('<li><span>' + item.content + '</span>' +
+						'<button class="complete">complete</button>' +
+						'<button class="remove">remove</button></li>');					
+				}
+			});
+			Todo.bindEvent();
 		}
-		Todo.bindEvent();
-	},
-	bindEvent: function() {
 		$('#add').on('click', function() {
 			Todo.newTodo();
-			$.each($('#list li'), function(i, item) {
-				$('.complete', item).on('click', function() {
-					Todo.completeTodo(item);
-				});
-				$('.remove', item).on('click', function() {
-					Todo.removeTodo(item);
-				});
+			Todo.bindEvent();
+		});
+		Todo.bindEvent();
+	},
+	// function ready for later use(refactor or other)
+	setData: function() {
+		localStorage.setItem('todo', JSON.stringify(Todo.appdata));
+	},
+	getData: function() {
+		localStorage.getItem('todo');
+		Todo.appdata = JSON.parse(d);
+	},
+	bindEvent: function() {
+		// why the click event will happen twice here?
+		$.each($('#list li'), function(i, item) {
+			$('.complete', item).on('click', function() {
+				console.log(1);
+				Todo.completeTodo(item, i);
+			});
+			$('.remove', item).on('click', function() {
+				console.log(2);
+				Todo.removeTodo(item, i);
 			});
 		});
 	},
@@ -41,11 +65,16 @@ var Todo = {
 		localStorage.setItem('todo', t);
 		$('#content').val('');
 	},
-	completeTodo: function(el) {
+	completeTodo: function(el, i) {
 		$(el).find('span').wrap('<strike>');
+
+		Todo.appdata.todos[Todo.appdata.todos.length - i - 1].complete = true;
+		localStorage.setItem('todo', JSON.stringify(Todo.appdata));
 	},
-	removeTodo: function(el) {
+	removeTodo: function(el, i) {
 		$(el).remove();
+		Todo.appdata.todos.splice((Todo.appdata.todos.length - i - 1), 1);
+		localStorage.setItem('todo', JSON.stringify(Todo.appdata));
 	}
 };
 
